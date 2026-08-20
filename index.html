@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Score the four growth levers in your chiropractic practice and calculate the annual opportunity."
+    />
+    <meta name="theme-color" content="#061733" />
+    <title>ChiroCandy $1M Growth Gap Scorecard</title>
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body data-step="welcome">
+    <nav class="toolbar" aria-label="Scorecard actions">
+      <span class="toolbar-score" aria-live="polite">
+        <b id="toolbarScore">0/40</b> total score · <span id="answeredCount">0 of 20 answered</span>
+      </span>
+      <div class="toolbar-actions">
+        <button class="button button-secondary results-only" id="editScoreButton" type="button">Edit Scorecard</button>
+        <button class="button button-secondary" id="resetButton" type="button">Reset</button>
+        <button class="button button-primary results-only" id="printButton" type="button">Print / Save PDF</button>
+      </div>
+    </nav>
+
+    <section class="welcome-screen" data-screen="welcome" aria-labelledby="welcomeTitle">
+      <div class="welcome-glow welcome-glow-one" aria-hidden="true"></div>
+      <div class="welcome-glow welcome-glow-two" aria-hidden="true"></div>
+      <div class="welcome-content">
+        <img class="welcome-brand" src="assets/chirocandy-logo.png" alt="ChiroCandy" />
+        <p class="eyebrow">Practice Growth Diagnosis</p>
+        <h1 id="welcomeTitle">Where Is Your Next <span>$1M</span> Hiding?</h1>
+        <p class="welcome-copy">
+          Score the four growth levers that determine whether your practice can see demand,
+          earn trust, stay known, and get found.
+        </p>
+        <button class="welcome-button" id="getStartedButton" type="button">
+          Get Started <span aria-hidden="true">→</span>
+        </button>
+        <p class="welcome-meta">20 statements · 4 growth levers · about 5 minutes</p>
+
+        <div class="lever-preview" aria-label="The four growth levers">
+          <div><small>01</small><b>NUMBERS</b><span>Can you see it?</span></div>
+          <div><small>02</small><b>TRUST</b><span>Do they believe?</span></div>
+          <div><small>03</small><b>KNOWN</b><span>Do they remember?</span></div>
+          <div><small>04</small><b>FOUND</b><span>Can they find you?</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet score-sheet" data-screen="score" aria-labelledby="scorecardTitle" hidden>
+      <header class="hero">
+        <img class="brand" src="assets/chirocandy-logo.png" alt="ChiroCandy" />
+        <p class="eyebrow">Practice Growth Diagnosis</p>
+        <h1 id="scorecardTitle">The <span>$1M Growth Gap</span> Scorecard</h1>
+      </header>
+
+      <div class="intro">
+        <p>
+          Score every statement: <strong>0 = No</strong>, <strong>1 = Partly</strong>,
+          <strong>2 = Yes</strong>. Each category totals 10 points. Honest scoring exposes the
+          highest-value constraint.
+        </p>
+        <p class="scale" aria-label="Scoring scale">0 NO · 1 PARTLY · 2 YES</p>
+      </div>
+
+      <main class="score-grid" id="scoreGrid"></main>
+
+      <div class="screen-controls score-controls">
+        <button class="text-button" id="backToWelcomeButton" type="button">← Back</button>
+        <div class="completion-action">
+          <p id="completionMessage">Answer all 20 statements to view your results.</p>
+          <button class="button button-primary next-button" id="viewResultsButton" type="button" disabled>
+            View My Results →
+          </button>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>ChiroCandy Growth Masterclass</span>
+        <span>PAGE 1 · SCORE THE PRACTICE</span>
+      </footer>
+    </section>
+
+    <section class="sheet results-sheet" data-screen="results" aria-labelledby="diagnosisTitle" hidden>
+      <header class="results-hero">
+        <h2 id="diagnosisTitle">Your Growth<br /><span>Diagnosis</span></h2>
+        <div class="total">
+          <small>Total score</small>
+          <strong id="totalScore" aria-live="polite">0/40</strong>
+        </div>
+      </header>
+
+      <main class="results-wrap">
+        <div class="results-row">
+          <section class="result-card" aria-labelledby="categoryScoresTitle">
+            <h3 id="categoryScoresTitle">Category Scores</h3>
+            <div class="category-results" id="categoryResults"></div>
+          </section>
+
+          <section class="result-card meaning-card" aria-labelledby="scoreMeaningTitle">
+            <h3 id="scoreMeaningTitle">What Your Score Means</h3>
+            <div class="interpretation">
+              <div class="range"><b>32–40</b><span>Growth-ready. Optimize the bottleneck.</span></div>
+              <div class="range"><b>24–31</b><span>Strong practice with meaningful leakage.</span></div>
+              <div class="range"><b>16–23</b><span>Major gaps are limiting growth.</span></div>
+              <div class="range"><b>0–15</b><span>Foundation gaps are hiding demand.</span></div>
+            </div>
+            <p class="diagnosis-text" id="diagnosisText" aria-live="polite">
+              Foundation gaps. First diagnostic: NUMBERS. Can you see it?
+            </p>
+          </section>
+        </div>
+
+        <section class="math" aria-labelledby="opportunityTitle">
+          <div class="math-heading">
+            <div>
+              <p class="section-kicker">Turn the gap into a monthly target</p>
+              <h3 id="opportunityTitle">Calculate the Opportunity</h3>
+            </div>
+            <span class="math-formula">Annual goal ÷ patient value ÷ 12</span>
+          </div>
+
+          <div class="equation">
+            <label class="money-field">
+              <span>Patient LTV</span>
+              <span class="input-shell"><i aria-hidden="true">$</i><input id="ltv" inputmode="decimal" value="2500" autocomplete="off" /></span>
+            </label>
+            <div class="op" aria-hidden="true">×</div>
+            <label>
+              <span>More patients / month</span>
+              <input id="patients" inputmode="decimal" value="34" autocomplete="off" />
+            </label>
+            <div class="op" aria-hidden="true">×</div>
+            <div class="fixed-field">
+              <span>Months</span>
+              <strong>12</strong>
+            </div>
+            <div class="op" aria-hidden="true">=</div>
+            <label class="annual-field money-field">
+              <span>Annual opportunity</span>
+              <span class="input-shell"><i aria-hidden="true">$</i><input id="annual" inputmode="decimal" value="1020000" autocomplete="off" /></span>
+            </label>
+          </div>
+
+          <p class="calculator-note" id="calculatorNote" aria-live="polite">
+            Edit the annual opportunity or patient value to calculate the monthly patient target.
+          </p>
+        </section>
+
+        <section class="priority">
+          <div class="priority-box">
+            <h3>Recommended Order of Operations</h3>
+            <p class="result-label">
+              Start with the lowest category. Fix the highest-value constraint before adding more tactics.
+            </p>
+            <div class="order" id="priorityOrder"></div>
+            <p class="print-note">
+              My first priority: ________________________________________ &nbsp;&nbsp; Owner:
+              __________________ &nbsp;&nbsp; Deadline: ______________
+            </p>
+          </div>
+
+          <aside class="cta" aria-label="Book a Practice Growth Diagnosis">
+            <img src="assets/practice-growth-qr.png" alt="QR code to book a Practice Growth Diagnosis" />
+            <div>
+              <small>Scan to book</small>
+              <b>Practice Growth Diagnosis</b>
+              <span>30 minutes</span>
+            </div>
+          </aside>
+        </section>
+
+        <div class="screen-controls result-controls">
+          <button class="text-button" id="backToScoreButton" type="button">← Edit Scorecard</button>
+          <div class="result-actions">
+            <button class="button button-secondary" id="startOverButton" type="button">Start Over</button>
+            <button class="button button-primary" id="resultPrintButton" type="button">Print / Save PDF</button>
+          </div>
+        </div>
+      </main>
+
+      <footer class="page-footer">
+        <span>Where Is Your Next $1M Hiding?</span>
+        <span>PAGE 2 · DIAGNOSE THE GAP</span>
+      </footer>
+    </section>
+  </body>
+</html>
