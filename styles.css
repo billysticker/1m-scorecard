@@ -212,10 +212,10 @@ body[data-step="results"] .results-only {
 }
 
 .welcome-screen h1 {
-  max-width: 860px;
+  max-width: 1040px;
   margin: 0;
-  font: 900 clamp(48px, 8.5vw, 92px)/0.98 var(--heading);
-  letter-spacing: -0.06em;
+  font: 900 clamp(42px, 6.2vw, 76px)/1 var(--heading);
+  letter-spacing: -0.055em;
 }
 
 .welcome-screen h1 span {
@@ -1043,7 +1043,7 @@ h3 {
   }
 
   .welcome-screen h1 {
-    font-size: clamp(42px, 14vw, 62px);
+    font-size: clamp(38px, 11vw, 54px);
   }
 
   .welcome-copy {
