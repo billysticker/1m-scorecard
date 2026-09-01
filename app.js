@@ -1,3 +1,9 @@
+const CONFIG = {
+  leadWebhookUrl: "https://billysticker.app.n8n.cloud/webhook/scorecard-lead",
+};
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const categories = {
   numbers: {
     name: "NUMBERS",
@@ -58,6 +64,15 @@ const annualInput = document.querySelector("#annual");
 const calculatorNote = document.querySelector("#calculatorNote");
 const viewResultsButton = document.querySelector("#viewResultsButton");
 const completionMessage = document.querySelector("#completionMessage");
+const leadCaptureForm = document.querySelector("#leadCaptureForm");
+const captureError = document.querySelector("#captureError");
+const submitLeadButton = document.querySelector("#submitLeadButton");
+const firstNameInput = document.querySelector("#firstName");
+const lastNameInput = document.querySelector("#lastName");
+const emailInput = document.querySelector("#email");
+const phoneInput = document.querySelector("#phone");
+
+let capturedLead = null;
 
 function showStep(step) {
   document.querySelectorAll("[data-screen]").forEach((screen) => {
@@ -232,6 +247,97 @@ function normalizeCurrencyInput(input) {
   input.value = value ? value.toLocaleString("en-US", { maximumFractionDigits: 0 }) : "0";
 }
 
+function getTopPriority(scores) {
+  const [lowestKey] = Object.entries(scores).sort((a, b) => a[1] - b[1])[0];
+  return categories[lowestKey].name;
+}
+
+function readContactFromForm() {
+  return {
+    firstName: firstNameInput.value.trim(),
+    lastName: lastNameInput.value.trim(),
+    email: emailInput.value.trim(),
+    phone: phoneInput.value.trim(),
+  };
+}
+
+function validateContact(contact) {
+  if (!contact.firstName) return "Enter your first name.";
+  if (!contact.lastName) return "Enter your last name.";
+  if (!contact.email || !EMAIL_PATTERN.test(contact.email)) return "Enter a valid email address.";
+  if (contact.phone.replace(/\D/g, "").length < 7) return "Enter a valid phone number.";
+  return "";
+}
+
+function showCaptureError(message) {
+  captureError.hidden = !message;
+  captureError.textContent = message || "";
+}
+
+function buildLeadPayload(contact) {
+  const scores = getScores();
+  const total = Object.values(scores).reduce((sum, score) => sum + score, 0);
+
+  return {
+    firstName: contact.firstName,
+    lastName: contact.lastName,
+    email: contact.email,
+    phone: contact.phone,
+    totalScore: total,
+    numbersScore: scores.numbers,
+    trustScore: scores.trust,
+    knownScore: scores.known,
+    foundScore: scores.found,
+    topPriority: getTopPriority(scores),
+    source: "1m-scorecard",
+    submittedAt: new Date().toISOString(),
+  };
+}
+
+async function submitLeadAndShowResults({ fromForm = false } = {}) {
+  const contact = fromForm ? readContactFromForm() : capturedLead;
+  if (!contact) return;
+
+  if (fromForm) {
+    const error = validateContact(contact);
+    if (error) {
+      showCaptureError(error);
+      return;
+    }
+  }
+
+  showCaptureError("");
+
+  if (fromForm) {
+    submitLeadButton.disabled = true;
+    submitLeadButton.textContent = "Saving…";
+  }
+
+  if (CONFIG.leadWebhookUrl) {
+    try {
+      const response = await fetch(CONFIG.leadWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(buildLeadPayload(contact)),
+      });
+      if (!response.ok) {
+        throw new Error(`Webhook responded ${response.status}`);
+      }
+    } catch {
+      showCaptureError("We couldn't save your details. Check your connection and try again.");
+      if (!fromForm) showStep("capture");
+      submitLeadButton.disabled = false;
+      submitLeadButton.textContent = "See My Results →";
+      return;
+    }
+  }
+
+  capturedLead = contact;
+  submitLeadButton.disabled = false;
+  submitLeadButton.textContent = "See My Results →";
+  showStep("results");
+}
+
 function resetScorecard({ returnToWelcome = false } = {}) {
   document.querySelectorAll('input[type="radio"]').forEach((input) => {
     input.checked = false;
@@ -239,10 +345,17 @@ function resetScorecard({ returnToWelcome = false } = {}) {
   ltvInput.value = "2,500";
   patientsInput.value = "34";
   annualInput.value = "1,020,000";
+  capturedLead = null;
+  leadCaptureForm.reset();
+  showCaptureError("");
+  submitLeadButton.disabled = false;
+  submitLeadButton.textContent = "See My Results →";
   updateScore();
   updatePatientsFromAnnual();
   if (returnToWelcome) {
     showStep("welcome");
+  } else if (document.body.dataset.step === "capture") {
+    showStep("score");
   } else {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -268,10 +381,25 @@ patientsInput.addEventListener("focus", () => {
   patientsInput.select();
 });
 
-document.querySelector("#getStartedButton").addEventListener("click", () => showStep("score"));
+document.querySelector("#getStartedButton").addEventListener("click", () => {
+  const iframe = document.querySelector("#welcomeVideo");
+  iframe?.contentWindow?.postMessage(JSON.stringify({ method: "pause" }), "https://player.vimeo.com");
+  showStep("score");
+});
 document.querySelector("#backToWelcomeButton").addEventListener("click", () => showStep("welcome"));
 document.querySelector("#viewResultsButton").addEventListener("click", () => {
-  if (!viewResultsButton.disabled) showStep("results");
+  if (viewResultsButton.disabled) return;
+  if (capturedLead) {
+    void submitLeadAndShowResults();
+    return;
+  }
+  showCaptureError("");
+  showStep("capture");
+});
+document.querySelector("#backToScoreFromCaptureButton").addEventListener("click", () => showStep("score"));
+leadCaptureForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  void submitLeadAndShowResults({ fromForm: true });
 });
 document.querySelector("#backToScoreButton").addEventListener("click", () => showStep("score"));
 document.querySelector("#editScoreButton").addEventListener("click", () => showStep("score"));

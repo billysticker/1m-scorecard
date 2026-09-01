@@ -1,0 +1,261 @@
+{
+  "name": "1M Scorecard Lead to GHL",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Setup\n\n1. Run `ghl-integration/setup-custom-fields.js` and paste each printed **fieldKey** into **Upsert GHL Contact** if it differs from the defaults (`contact.1m_total_score`, `contact.numbers_score`, `contact.trust_score`, `contact.known_score`, `contact.found_score`, `contact.top_priority`).\n2. Replace `{{GHL_TOKEN}}` and `{{GHL_LOCATION_ID}}` in **Upsert GHL Contact**. Preferred: n8n Header Auth credential (`Authorization: Bearer <PRIVATE_INTEGRATION_TOKEN>`) and a hardcoded location ID. Token scopes: `contacts.write`. Custom-field scopes are only needed for the setup script.\n3. Connect a Slack credential on **Notify Slack**. Channel: `#sales`.\n4. Activate this workflow. Copy the **Production** URL (`/webhook/scorecard-lead`) into `CONFIG.leadWebhookUrl` in `app.js`.\n5. Tag applied in GHL: **1M Scorecard**. Upsert overwrites existing tags on a matched contact.\n\nAPI: `POST https://services.leadconnectorhq.com/contacts/upsert`\nHeaders: `Authorization: Bearer …`, `Version: 2021-07-28`",
+        "height": 520,
+        "width": 420,
+        "color": 7
+      },
+      "id": "sticky-setup",
+      "name": "Setup",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-280, 40]
+    },
+    {
+      "parameters": {
+        "content": "## Credentials placeholders\n\nIn **Upsert GHL Contact**:\n- Header `Authorization`: `Bearer {{GHL_TOKEN}}`\n- Body `locationId`: `{{GHL_LOCATION_ID}}`\n\nReplace those two placeholders before activating. Do not leave the mustache values — n8n will try to evaluate them as expressions.\n\n**Notify Slack** uses a placeholder Slack credential. Open the node and select a real Slack account.",
+        "height": 280,
+        "width": 340,
+        "color": 5
+      },
+      "id": "sticky-creds",
+      "name": "Credentials",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1240, 40]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "scorecard-lead",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "node-webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [240, 360],
+      "webhookId": "scorecard-lead"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $json.body && typeof $json.body === 'object' ? $json.body : $json;\nconst firstName = String(raw.firstName || '').trim();\nconst lastName = String(raw.lastName || '').trim();\nconst email = String(raw.email || '').trim();\nconst phone = String(raw.phone || '').trim();\nconst emailValid = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);\n\nif (!email || !emailValid) {\n  return [{\n    json: {\n      valid: false,\n      error: 'A valid email is required.',\n      firstName,\n      lastName,\n      email,\n      phone,\n    },\n  }];\n}\n\nreturn [{\n  json: {\n    valid: true,\n    firstName,\n    lastName,\n    email,\n    phone,\n    totalScore: Number(raw.totalScore) || 0,\n    numbersScore: Number(raw.numbersScore) || 0,\n    trustScore: Number(raw.trustScore) || 0,\n    knownScore: Number(raw.knownScore) || 0,\n    foundScore: Number(raw.foundScore) || 0,\n    topPriority: String(raw.topPriority || '').trim(),\n    source: String(raw.source || '1m-scorecard').trim() || '1m-scorecard',\n    submittedAt: raw.submittedAt || new Date().toISOString(),\n  },\n}];"
+      },
+      "id": "node-validate",
+      "name": "Validate Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 360]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cond-email-valid",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if",
+      "name": "Email Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [720, 360]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{ \"ok\": false, \"error\": \"A valid email is required.\" }",
+        "options": {
+          "responseCode": 400,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "node-respond-400",
+      "name": "Respond 400",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [980, 560]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/contacts/upsert",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{GHL_TOKEN}}"
+            },
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  locationId: \"CMbaV42JZHKdMbeRLBUu\",\n  firstName: $json.firstName,\n  lastName: $json.lastName,\n  name: [$json.firstName, $json.lastName].filter(Boolean).join(\" \"),\n  email: $json.email,\n  phone: $json.phone,\n  source: $json.source,\n  tags: [\"1M Scorecard\"],\n  customFields: [\n    { key: \"1m_total_score\", fieldValue: $json.totalScore },\n    { key: \"numbers_score\", fieldValue: $json.numbersScore },\n    { key: \"trust_score\", fieldValue: $json.trustScore },\n    { key: \"known_score\", fieldValue: $json.knownScore },\n    { key: \"found_score\", fieldValue: $json.foundScore },\n    { key: \"top_priority\", fieldValue: $json.topPriority }\n  ]\n} }}",
+        "options": {}
+      },
+      "id": "node-ghl-upsert",
+      "name": "Upsert GHL Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [980, 260]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "#sales"
+        },
+        "text": "=New scorecard lead: {{ $('Validate Email').item.json.firstName }} {{ $('Validate Email').item.json.lastName }} {{ $('Validate Email').item.json.phone }} | Total {{ $('Validate Email').item.json.totalScore }}/40 | Numbers {{ $('Validate Email').item.json.numbersScore }}/10 Trust {{ $('Validate Email').item.json.trustScore }}/10 Known {{ $('Validate Email').item.json.knownScore }}/10 Found {{ $('Validate Email').item.json.foundScore }}/10 | Priority: {{ $('Validate Email').item.json.topPriority }}",
+        "otherOptions": {}
+      },
+      "id": "node-slack",
+      "name": "Notify Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1220, 260],
+      "credentials": {
+        "slackApi": {
+          "id": "PLACEHOLDER_SLACK_CREDENTIAL",
+          "name": "Slack account (placeholder)"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{ \"ok\": true }",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "node-respond-200",
+      "name": "Respond 200",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1460, 260]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Email": {
+      "main": [
+        [
+          {
+            "node": "Email Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Valid?": {
+      "main": [
+        [
+          {
+            "node": "Upsert GHL Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond 400",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert GHL Contact": {
+      "main": [
+        [
+          {
+            "node": "Notify Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Slack": {
+      "main": [
+        [
+          {
+            "node": "Respond 200",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

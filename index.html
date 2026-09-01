@@ -38,8 +38,22 @@
           Grade yourself in the 4 areas every 7-figure practice has mastered. Takes 2 minutes.
           Find the leak that's costing you patients.
         </p>
+
+        <figure class="welcome-video">
+          <p class="welcome-video-kicker">Watch this first</p>
+          <div class="welcome-video-frame">
+            <iframe
+              id="welcomeVideo"
+              src="https://player.vimeo.com/video/1222784128?title=0&byline=0&portrait=0"
+              title="Watch this before you start the scorecard"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </figure>
+
         <button class="welcome-button" id="getStartedButton" type="button">
-          Get Started <span aria-hidden="true">→</span>
+          Start the Scorecard <span aria-hidden="true">→</span>
         </button>
         <p class="welcome-meta">20 statements · 4 growth levers · about 2 minutes</p>
 
@@ -86,6 +100,49 @@
       </footer>
     </section>
 
+    <section class="capture-screen" data-screen="capture" aria-labelledby="captureTitle" hidden>
+      <div class="welcome-glow welcome-glow-one" aria-hidden="true"></div>
+      <div class="welcome-glow welcome-glow-two" aria-hidden="true"></div>
+      <div class="capture-content">
+        <img class="welcome-brand" src="assets/chirocandy-logo.png" alt="ChiroCandy" />
+        <p class="eyebrow">Diagnosis ready</p>
+        <h1 id="captureTitle">Unlock your <span>Growth Diagnosis</span></h1>
+        <p class="welcome-copy">
+          Enter your details to see your score, the leak costing you patients, and the first lever to fix.
+        </p>
+
+        <form class="capture-form" id="leadCaptureForm" novalidate>
+          <div class="capture-row">
+            <label>
+              First name
+              <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
+            </label>
+            <label>
+              Last name
+              <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
+            </label>
+          </div>
+          <label>
+            Email
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required />
+          </label>
+          <label>
+            Phone
+            <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+          </label>
+          <p class="capture-error" id="captureError" role="alert" hidden></p>
+          <button class="welcome-button" id="submitLeadButton" type="submit">
+            See My Results <span aria-hidden="true">→</span>
+          </button>
+          <p class="welcome-meta">We'll use this to send your diagnosis and follow up on the gap.</p>
+        </form>
+
+        <button class="text-button capture-back" id="backToScoreFromCaptureButton" type="button">
+          ← Edit Scorecard
+        </button>
+      </div>
+    </section>
+
     <section class="sheet results-sheet" data-screen="results" aria-labelledby="diagnosisTitle" hidden>
       <header class="results-hero">
         <h2 id="diagnosisTitle">Your Growth<br /><span>Diagnosis</span></h2>
@@ -115,6 +172,24 @@
             </p>
           </section>
         </div>
+
+        <aside class="training-cta" aria-labelledby="trainingTitle">
+          <div>
+            <p class="section-kicker">Close the gap</p>
+            <h3 id="trainingTitle">Watch the 34-minute training</h3>
+            <p>
+              See exactly how top practices close the leak you just scored — and where the next $1M is hiding.
+            </p>
+          </div>
+          <a
+            class="button button-primary training-cta-button"
+            href="https://go.chirocandy.com/next-1-million-training"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Watch the Training <span aria-hidden="true">→</span>
+          </a>
+        </aside>
 
         <section class="math" aria-labelledby="opportunityTitle">
           <div class="math-heading">
