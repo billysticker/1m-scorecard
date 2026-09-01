@@ -91,12 +91,12 @@ body[data-step="results"] .results-only {
 }
 
 .toolbar-score {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .toolbar-score b {
   color: var(--bright);
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .toolbar-actions {
@@ -107,9 +107,9 @@ body[data-step="results"] .results-only {
 }
 
 .toolbar-cta {
-  min-height: 36px;
-  padding: 8px 12px;
-  font-size: 11px;
+  min-height: 40px;
+  padding: 9px 14px;
+  font-size: 13px;
 }
 
 .button {
@@ -148,6 +148,8 @@ body[data-step="results"] .results-only {
 .welcome-button:focus-visible,
 .capture-form input:focus-visible,
 .plan-cta a:focus-visible,
+.plan-path a:focus-visible,
+.plan-path-media:focus-visible,
 .toolbar-cta:focus-visible,
 .text-button:focus-visible {
   outline: 3px solid #b7ff8c;
@@ -535,6 +537,11 @@ body[data-step="results"] .results-only {
   text-transform: uppercase;
 }
 
+.results-sheet .section-kicker,
+.next-steps .section-kicker {
+  font-size: 12px;
+}
+
 .eyebrow {
   position: relative;
   z-index: 2;
@@ -806,19 +813,19 @@ h3,
 
 h3 {
   margin: 0 0 0.12in;
-  font-size: 16px;
+  font-size: 20px;
   letter-spacing: -0.025em;
 }
 
 .category-results {
   display: grid;
-  gap: 0.09in;
+  gap: 0.12in;
 }
 
 .category-result-label {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 900;
 }
 
@@ -845,9 +852,9 @@ h3 {
   display: flex;
   justify-content: space-between;
   gap: 0.15in;
-  padding: 0.075in 0;
+  padding: 0.09in 0;
   border-bottom: 1px solid #edf2ea;
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .range:last-child {
@@ -855,16 +862,16 @@ h3 {
 }
 
 .range b {
-  min-width: 0.72in;
+  min-width: 0.9in;
   color: var(--green);
 }
 
 .diagnosis-text {
-  margin: 0.14in 0 0;
+  margin: 0.16in 0 0;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 850;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .math {
@@ -890,7 +897,7 @@ h3 {
 
 .math-formula {
   color: #93a3b8;
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -912,7 +919,7 @@ h3 {
 .equation label > span:first-child,
 .fixed-field > span {
   color: #aebed0;
-  font-size: 7px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -921,13 +928,13 @@ h3 {
 .equation input,
 .fixed-field strong {
   width: 100%;
-  height: 0.43in;
+  height: 0.5in;
   padding: 0.1in 0.09in;
   color: white;
   background: #0c2347;
   border: 1px solid #29496e;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 850;
 }
 
@@ -965,7 +972,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 0.43in;
+  height: 0.5in;
   color: var(--green);
   font-weight: 900;
 }
@@ -982,9 +989,9 @@ h3 {
 }
 
 .calculator-note {
-  margin: 0.1in 0 0;
+  margin: 0.12in 0 0;
   color: #b7c3d3;
-  font-size: 8px;
+  font-size: 13px;
   line-height: 1.45;
 }
 
@@ -1009,8 +1016,8 @@ h3 {
 .result-label {
   margin: 0;
   color: var(--muted);
-  font-size: 10px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .order {
@@ -1031,14 +1038,14 @@ h3 {
 .order small {
   display: block;
   color: var(--green);
-  font-size: 7px;
+  font-size: 11px;
   font-weight: 900;
 }
 
 .order b {
   display: block;
   margin-top: 4px;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .print-note {
@@ -1057,17 +1064,18 @@ h3 {
 }
 
 .next-steps > h3 {
-  margin: 0 0 0.14in;
+  margin: 0 0 0.16in;
+  font-size: 24px;
 }
 
 .recommendation-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.14in;
+  gap: 0.16in;
 }
 
 .recommendation-card {
-  padding: 0.16in 0.16in 0.14in;
+  padding: 0.2in;
   background: white;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -1089,9 +1097,9 @@ h3 {
 }
 
 .recommendation-kicker {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1100,9 +1108,9 @@ h3 {
 .recommendation-card h4 {
   margin: 0;
   font-family: var(--heading);
-  font-size: 13px;
+  font-size: 18px;
   letter-spacing: -0.03em;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .recommendation-tags {
@@ -1118,8 +1126,8 @@ h3 {
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
-  padding: 3px 8px;
-  font-size: 8px;
+  padding: 4px 9px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1146,16 +1154,16 @@ h3 {
 }
 
 .recommendation-body {
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   color: var(--ink);
-  font-size: 10px;
-  line-height: 1.45;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 .recommendation-services-label {
-  margin: 10px 0 4px;
+  margin: 14px 0 6px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1163,64 +1171,142 @@ h3 {
 
 .recommendation-card ul {
   margin: 0;
-  padding: 0 0 0 0.16in;
+  padding: 0 0 0 0.18in;
 }
 
 .recommendation-card li {
   color: var(--ink);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .plan-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.22in;
+  display: grid;
+  gap: 0.2in;
   margin-top: 0.22in;
-  padding: 0.2in 0.24in;
+  padding: 0.24in;
   color: white;
   background: linear-gradient(128deg, var(--deep) 0%, var(--navy) 62%, #17452d 100%);
-  border-radius: 12px;
+  border-radius: 16px;
 }
 
-.plan-cta .section-kicker {
-  margin: 0 0 4px;
+.plan-cta-intro .section-kicker {
+  margin: 0 0 6px;
 }
 
-.plan-cta h3 {
+.plan-cta-intro h3 {
   margin: 0;
   color: var(--bright);
   font-family: var(--heading);
-  font-size: 16px;
-  letter-spacing: -0.03em;
+  font-size: 26px;
+  letter-spacing: -0.04em;
 }
 
-.plan-cta p {
-  max-width: 4.8in;
-  margin: 6px 0 0;
+.plan-cta-intro p {
+  max-width: 6.4in;
+  margin: 8px 0 0;
   color: #c5d0de;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 16px;
+  line-height: 1.45;
 }
 
-.plan-cta-actions {
+.plan-cta-paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.16in;
+}
+
+.plan-path {
   display: flex;
-  flex: 0 0 auto;
   flex-direction: column;
-  gap: 8px;
-  min-width: 2.4in;
+  min-height: 100%;
+  padding: 0.2in;
+  background: rgb(255 255 255 / 7%);
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 14px;
 }
 
-.plan-cta-actions .button {
+.plan-path-train,
+.plan-path-call {
+  padding-top: 0;
+}
+
+.plan-path-media {
+  display: block;
+  overflow: hidden;
+  width: calc(100% + 0.4in);
+  margin: 0 -0.2in 0.16in;
+  aspect-ratio: 16 / 9;
+  background: #04101f;
+  border-radius: 14px 14px 0 0;
+}
+
+.plan-path-media img,
+.calendar-visual,
+.calendar-svg {
+  display: block;
   width: 100%;
+  height: 100%;
 }
 
-.plan-cta-secondary {
+.plan-path-media img {
+  object-fit: cover;
+  object-position: center 12%;
+}
+
+.plan-path-calendar {
+  position: relative;
+}
+
+.calendar-visual {
+  position: relative;
+}
+
+.calendar-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 10px;
   color: white;
-  background: transparent;
-  border-color: rgb(255 255 255 / 28%);
+  background: rgb(4 16 31 / 82%);
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.plan-path-kicker {
+  margin: 0;
+  color: var(--bright);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.plan-path h4 {
+  margin: 8px 0 0;
+  color: white;
+  font-family: var(--heading);
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.plan-path p {
+  flex: 1;
+  margin: 10px 0 16px;
+  color: #c5d0de;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.plan-path .button {
+  width: 100%;
+  min-height: 52px;
+  font-size: 16px;
 }
 
 .cta {
@@ -1245,7 +1331,7 @@ h3 {
 
 .cta small {
   color: #aebed0;
-  font-size: 7px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1253,17 +1339,17 @@ h3 {
 
 .cta b {
   display: block;
-  margin-top: 2px;
+  margin-top: 4px;
   color: var(--bright);
   font-family: var(--heading);
-  font-size: 9px;
-  line-height: 1.15;
+  font-size: 13px;
+  line-height: 1.2;
 }
 
 .cta span {
   display: block;
-  margin-top: 2px;
-  font-size: 7px;
+  margin-top: 4px;
+  font-size: 11px;
 }
 
 @media (max-width: 850px) {
@@ -1362,19 +1448,15 @@ h3 {
   }
 
   .plan-cta {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 16px;
     padding: 22px 20px;
   }
 
-  .plan-cta p {
-    max-width: none;
+  .plan-cta-intro h3 {
+    font-size: 24px;
   }
 
-  .plan-cta-actions {
-    min-width: 0;
-    width: 100%;
+  .plan-cta-paths {
+    grid-template-columns: 1fr;
   }
 
   .total strong {
@@ -1575,11 +1657,47 @@ h3 {
     grid-template-columns: 1fr 1fr;
   }
 
+  .results-sheet h3,
+  .next-steps > h3 {
+    font-size: 14px;
+  }
+
+  .category-result-label,
+  .diagnosis-text,
+  .recommendation-body,
+  .recommendation-card li,
+  .result-label,
+  .plan-cta-intro p,
+  .plan-path p {
+    font-size: 9px;
+  }
+
+  .range,
+  .order b,
+  .cta b {
+    font-size: 9px;
+  }
+
+  .recommendation-kicker,
+  .recommendation-services-label,
+  .recommendation-card h4,
+  .plan-path h4,
+  .plan-cta-intro h3 {
+    font-size: 11px;
+  }
+
+  .plan-path .button {
+    min-height: 32px;
+    font-size: 10px;
+  }
+
   .hero,
   .results-hero,
   .cat-head,
   .math,
   .plan-cta,
+  .plan-path-media img,
+  .plan-path-calendar,
   .recommendation-card,
   .cta,
   .choices input:checked + label,

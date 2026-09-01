@@ -11,7 +11,7 @@
     <title>ChiroCandy $1M Growth Gap Scorecard</title>
     <link rel="icon" href="favicon.ico" sizes="any" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="app.js" defer></script>
+    <script src="app.js?v=preview" defer></script>
   </head>
   <body data-step="welcome">
     <nav class="toolbar" aria-label="Scorecard actions">
@@ -25,7 +25,7 @@
           data-booking-link
           target="_blank"
           rel="noopener noreferrer"
-        >Schedule Call</a>
+        >Book a Call</a>
         <a
           class="button button-secondary results-only toolbar-cta"
           id="toolbarTrainButton"
@@ -35,7 +35,7 @@
         >Watch Training</a>
         <button class="button button-secondary results-only" id="editScoreButton" type="button">Edit Scorecard</button>
         <button class="button button-secondary" id="resetButton" type="button">Reset</button>
-        <button class="button button-primary results-only" id="printButton" type="button">Print / Save PDF</button>
+        <button class="button button-secondary results-only" id="printButton" type="button">Print / Save PDF</button>
       </div>
     </nav>
 
@@ -46,10 +46,10 @@
         <img class="welcome-brand" src="assets/chirocandy-logo.png" alt="ChiroCandy" />
         <p class="eyebrow">Practice Growth Diagnosis</p>
         <h1 id="welcomeTitle">
-          How Does Your Marketing Score Against the <span>Top Practices</span> in the Profession?
+          Quiz: How Does Your Marketing Score Against the <span>Top Practices</span> in the Profession?
         </h1>
         <p class="welcome-copy">
-          Grade yourself in the 4 areas every 7-figure practice has mastered. Takes 2 minutes.
+          Grade yourself in the 4 areas every 7-figure practice has mastered. Takes 3 minutes.
           Find the leak that's costing you patients.
         </p>
 
@@ -69,7 +69,7 @@
         <button class="welcome-button" id="getStartedButton" type="button">
           Start the Scorecard <span aria-hidden="true">→</span>
         </button>
-        <p class="welcome-meta">20 statements · 4 growth levers · about 2 minutes</p>
+        <p class="welcome-meta">20 statements · 4 growth levers · about 3 minutes</p>
 
         <div class="lever-preview" aria-label="The four growth levers">
           <div><small>01</small><b>NUMBERS</b><span>Can you see it?</span></div>
@@ -187,42 +187,109 @@
           </section>
         </div>
 
+        <aside class="plan-cta" aria-labelledby="planCtaTitle">
+          <div class="plan-cta-intro">
+            <p class="section-kicker">Your next move</p>
+            <h3 id="planCtaTitle">Close the leak you just scored</h3>
+            <p>Watch the training, book a call, or both. Either path turns this diagnosis into a plan.</p>
+          </div>
+          <div class="plan-cta-paths">
+            <article class="plan-path plan-path-train">
+              <a
+                class="plan-path-media"
+                data-training-link
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Watch Your Next $1M in Practice training"
+              >
+                <img
+                  src="assets/next-1m-masterclass.jpg"
+                  alt="Your Next $1M in Practice masterclass with Billy Sticker"
+                />
+              </a>
+              <p class="plan-path-kicker">34-minute masterclass</p>
+              <h4>Your Next $1M in Practice</h4>
+              <p>See how top offices close the gap in Numbers, Trust, Known, and Found — and where the next million is hiding.</p>
+              <a
+                class="button button-primary"
+                id="watchTrainingButton"
+                data-training-link
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Watch the Training <span aria-hidden="true">→</span>
+              </a>
+            </article>
+            <article class="plan-path plan-path-call">
+              <a
+                class="plan-path-media plan-path-calendar"
+                data-booking-link
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Book your strategy call"
+              >
+                <span class="calendar-visual" aria-hidden="true">
+                  <svg class="calendar-svg" viewBox="0 0 360 202" fill="none">
+                    <rect width="360" height="202" rx="0" fill="#04101f" />
+                    <circle cx="300" cy="40" r="90" fill="#68bc44" opacity="0.16" />
+                    <circle cx="40" cy="180" r="70" fill="#68bc44" opacity="0.08" />
+                    <rect x="78" y="28" width="204" height="154" rx="18" fill="#0a2144" stroke="#8fe05f" stroke-opacity="0.28" />
+                    <rect x="78" y="28" width="204" height="42" rx="18" fill="#68bc44" />
+                    <rect x="78" y="48" width="204" height="22" fill="#68bc44" />
+                    <circle cx="108" cy="42" r="5" fill="#04101f" />
+                    <circle cx="252" cy="42" r="5" fill="#04101f" />
+                    <text x="180" y="56" text-anchor="middle" fill="#04101f" font-family="Arial Black, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="900" letter-spacing="2">THIS WEEK</text>
+                    <g fill="#5a7a9a" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800">
+                      <text x="108" y="88" text-anchor="middle">M</text>
+                      <text x="132" y="88" text-anchor="middle">T</text>
+                      <text x="156" y="88" text-anchor="middle">W</text>
+                      <text x="180" y="88" text-anchor="middle">T</text>
+                      <text x="204" y="88" text-anchor="middle">F</text>
+                      <text x="228" y="88" text-anchor="middle">S</text>
+                      <text x="252" y="88" text-anchor="middle">S</text>
+                    </g>
+                    <g fill="#c5d0de" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800">
+                      <text x="108" y="112" text-anchor="middle">3</text>
+                      <text x="132" y="112" text-anchor="middle">4</text>
+                      <text x="156" y="112" text-anchor="middle">5</text>
+                      <text x="180" y="112" text-anchor="middle">6</text>
+                      <text x="228" y="112" text-anchor="middle">8</text>
+                      <text x="252" y="112" text-anchor="middle">9</text>
+                      <text x="108" y="140" text-anchor="middle">10</text>
+                      <text x="132" y="140" text-anchor="middle">11</text>
+                      <text x="156" y="140" text-anchor="middle">12</text>
+                      <text x="180" y="140" text-anchor="middle">13</text>
+                      <text x="204" y="140" text-anchor="middle">14</text>
+                      <text x="228" y="140" text-anchor="middle">15</text>
+                      <text x="252" y="140" text-anchor="middle">16</text>
+                    </g>
+                    <circle cx="204" cy="107" r="14" fill="#8fe05f" />
+                    <text x="204" y="112" text-anchor="middle" fill="#04101f" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="900">7</text>
+                  </svg>
+                  <span class="calendar-badge">20 MIN</span>
+                </span>
+              </a>
+              <p class="plan-path-kicker">Book Your Strategy Call</p>
+              <h4>Get a plan for your office</h4>
+              <p>We'll map these scores to the first lever to fix and the services that close it.</p>
+              <a
+                class="button button-primary"
+                id="schedulePlanButton"
+                data-booking-link
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a Call <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </aside>
+
         <section class="next-steps" aria-labelledby="nextStepsTitle">
           <p class="section-kicker">Close the gap</p>
           <h3 id="nextStepsTitle">Your Recommended Next Steps</h3>
           <div class="recommendation-grid" id="recommendationGrid"></div>
         </section>
-
-        <aside class="plan-cta" aria-labelledby="planCtaTitle">
-          <div>
-            <p class="section-kicker">Work with ChiroCandy</p>
-            <h3 id="planCtaTitle">Get Your Customized Plan</h3>
-            <p>
-              Your scores tell us where the leak is. A 20-minute call turns them
-              into a plan for your next $1M.
-            </p>
-          </div>
-          <div class="plan-cta-actions">
-            <a
-              class="button button-primary"
-              id="schedulePlanButton"
-              data-booking-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Schedule My Plan Call <span aria-hidden="true">→</span>
-            </a>
-            <a
-              class="button button-secondary plan-cta-secondary"
-              id="watchTrainingButton"
-              data-training-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Watch the Full 34-Minute Masterclass
-            </a>
-          </div>
-        </aside>
 
         <section class="math" aria-labelledby="opportunityTitle">
           <div class="math-heading">

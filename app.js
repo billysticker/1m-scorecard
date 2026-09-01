@@ -596,3 +596,33 @@ normalizeCurrencyInput(ltvInput);
 normalizeCurrencyInput(annualInput);
 updateScore();
 updatePatientsFromAnnual();
+
+if (new URLSearchParams(window.location.search).has("preview")) {
+  previewResults();
+}
+
+function previewResults() {
+  const sample = {
+    numbers: [1, 1, 1, 1, 1],
+    trust: [1, 1, 1, 1, 2],
+    known: [2, 2, 2, 1, 1],
+    found: [0, 1, 1, 1, 1],
+  };
+
+  Object.entries(sample).forEach(([key, values]) => {
+    values.forEach((value, index) => {
+      const input = document.querySelector(`input[name="${key}-${index}"][value="${value}"]`);
+      if (input) input.checked = true;
+    });
+  });
+
+  capturedLead = {
+    firstName: "Preview",
+    lastName: "Visitor",
+    email: "preview@chirocandy.com",
+    phone: "5551234567",
+  };
+
+  updateScore();
+  showStep("results");
+}
