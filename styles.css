@@ -101,16 +101,29 @@ body[data-step="results"] .results-only {
 
 .toolbar-actions {
   display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
   gap: 8px;
 }
 
+.toolbar-cta {
+  min-height: 36px;
+  padding: 8px 12px;
+  font-size: 11px;
+}
+
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   min-height: 40px;
   border-radius: 8px;
   padding: 9px 15px;
   border: 1px solid transparent;
   font-weight: 800;
   font-size: 12px;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -134,7 +147,8 @@ body[data-step="results"] .results-only {
 .equation input:focus-visible,
 .welcome-button:focus-visible,
 .capture-form input:focus-visible,
-.training-cta-button:focus-visible,
+.plan-cta a:focus-visible,
+.toolbar-cta:focus-visible,
 .text-button:focus-visible {
   outline: 3px solid #b7ff8c;
   outline-offset: 2px;
@@ -1033,7 +1047,133 @@ h3 {
   font-size: 8px;
 }
 
-.training-cta {
+.next-steps {
+  margin-top: 0.22in;
+}
+
+.next-steps .section-kicker {
+  margin: 0 0 4px;
+  color: var(--green);
+}
+
+.next-steps > h3 {
+  margin: 0 0 0.14in;
+}
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.14in;
+}
+
+.recommendation-card {
+  padding: 0.16in 0.16in 0.14in;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(4 20 47 / 5%);
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.recommendation-card-start {
+  border-color: var(--green);
+  box-shadow: 0 8px 24px rgb(104 188 68 / 16%);
+}
+
+.recommendation-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.recommendation-kicker {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.recommendation-card h4 {
+  margin: 0;
+  font-family: var(--heading);
+  font-size: 13px;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.recommendation-tags {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.start-here-tag,
+.rec-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.start-here-tag {
+  color: var(--deep);
+  background: var(--bright);
+}
+
+.rec-badge-low {
+  color: #9b1c1c;
+  background: #fde8e4;
+}
+
+.rec-badge-mid {
+  color: #9a3412;
+  background: #fef3c7;
+}
+
+.rec-badge-high {
+  color: #3f6212;
+  background: #e7f8dc;
+}
+
+.recommendation-body {
+  margin: 8px 0 0;
+  color: var(--ink);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.recommendation-services-label {
+  margin: 10px 0 4px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.recommendation-card ul {
+  margin: 0;
+  padding: 0 0 0 0.16in;
+}
+
+.recommendation-card li {
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.plan-cta {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1045,11 +1185,11 @@ h3 {
   border-radius: 12px;
 }
 
-.training-cta .section-kicker {
+.plan-cta .section-kicker {
   margin: 0 0 4px;
 }
 
-.training-cta h3 {
+.plan-cta h3 {
   margin: 0;
   color: var(--bright);
   font-family: var(--heading);
@@ -1057,7 +1197,7 @@ h3 {
   letter-spacing: -0.03em;
 }
 
-.training-cta p {
+.plan-cta p {
   max-width: 4.8in;
   margin: 6px 0 0;
   color: #c5d0de;
@@ -1065,13 +1205,22 @@ h3 {
   line-height: 1.4;
 }
 
-.training-cta-button {
-  display: inline-flex;
+.plan-cta-actions {
+  display: flex;
   flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   gap: 8px;
-  text-decoration: none;
+  min-width: 2.4in;
+}
+
+.plan-cta-actions .button {
+  width: 100%;
+}
+
+.plan-cta-secondary {
+  color: white;
+  background: transparent;
+  border-color: rgb(255 255 255 / 28%);
 }
 
 .cta {
@@ -1129,6 +1278,10 @@ h3 {
     border-radius: 0;
   }
 
+  .toolbar-actions {
+    flex-wrap: wrap;
+  }
+
   .sheet {
     width: 100%;
     min-height: 0;
@@ -1177,6 +1330,7 @@ h3 {
 
   .score-grid,
   .results-row,
+  .recommendation-grid,
   .priority {
     grid-template-columns: 1fr;
   }
@@ -1207,20 +1361,20 @@ h3 {
     font-size: clamp(38px, 8vw, 54px);
   }
 
-  .training-cta {
+  .plan-cta {
     align-items: stretch;
     flex-direction: column;
     gap: 16px;
     padding: 22px 20px;
   }
 
-  .training-cta p {
+  .plan-cta p {
     max-width: none;
   }
 
-  .training-cta-button {
+  .plan-cta-actions {
+    min-width: 0;
     width: 100%;
-    justify-content: center;
   }
 
   .total strong {
@@ -1387,7 +1541,6 @@ h3 {
 
   .welcome-screen,
   .capture-screen,
-  .training-cta,
   .screen-controls {
     display: none !important;
   }
@@ -1412,11 +1565,22 @@ h3 {
     padding-bottom: 0.35in;
   }
 
+  .results-sheet {
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+  }
+
+  .recommendation-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .hero,
   .results-hero,
   .cat-head,
   .math,
-  .training-cta,
+  .plan-cta,
+  .recommendation-card,
   .cta,
   .choices input:checked + label,
   .annual-field .input-shell input {

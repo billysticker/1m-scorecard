@@ -9,6 +9,7 @@ A zero-dependency web funnel with a two-page printable scorecard based on the Ch
 - Requires all 20 statements to be answered, then a name/email/phone, before revealing the diagnosis.
 - Posts the lead (scores + contact) to `CONFIG.leadWebhookUrl` so n8n can upsert them in Go High Level with tag **1M Scorecard**.
 - Shows four category totals out of 10 and recommends the lowest-scoring growth lever first.
+- Renders per-category next-step recommendations (copy lives in `RECOMMENDATIONS` in `app.js`) and links to a plan call plus the 34-minute masterclass.
 - Calculates additional patients needed per month from an editable annual opportunity and patient lifetime value.
 - Also supports editing the monthly patient target to calculate the annual opportunity in the other direction.
 - Prints cleanly to a two-page US Letter PDF.
@@ -20,10 +21,18 @@ Set `CONFIG.leadWebhookUrl` in `app.js` to the **n8n production** webhook URL (p
 ```js
 const CONFIG = {
   leadWebhookUrl: "https://your-n8n.example.com/webhook/scorecard-lead",
+  bookingUrl: "https://chirocandy.com/schedule/",
+  trainingUrl: "https://go.chirocandy.com/next-1-million-training",
 };
 ```
 
-Leave it empty while developing locally — the form still gates results, but nothing is posted. Full GHL custom-field setup, Private Integration token steps, and the importable n8n workflow live in [`ghl-integration/`](ghl-integration/README.md).
+- `leadWebhookUrl` — n8n production webhook. Leave empty while developing locally; the form still gates results, but nothing is posted.
+- `bookingUrl` — scheduling link for **Schedule My Plan Call**. The results screen appends `name`, `email`, and `utm_content` (`n8-t5-k3-f9-NUMBERS`) from the captured lead and scores.
+- `trainingUrl` — 34-minute masterclass.
+
+All recommendation headlines, body copy, service lists, and `ctaLabel` values live in the `RECOMMENDATIONS` object in `app.js`, keyed by category (`numbers`, `trust`, `known`, `found`) and score band (`low` 0–4, `mid` 5–7, `high` 8–10). Edit that object to change results-page copy without touching markup.
+
+Full GHL custom-field setup, Private Integration token steps, and the importable n8n workflow live in [`ghl-integration/`](ghl-integration/README.md).
 
 ## Run locally
 

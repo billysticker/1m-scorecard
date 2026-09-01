@@ -19,6 +19,20 @@
         <b id="toolbarScore">0/40</b> total score · <span id="answeredCount">0 of 20 answered</span>
       </span>
       <div class="toolbar-actions">
+        <a
+          class="button button-primary results-only toolbar-cta"
+          id="toolbarBookButton"
+          data-booking-link
+          target="_blank"
+          rel="noopener noreferrer"
+        >Schedule Call</a>
+        <a
+          class="button button-secondary results-only toolbar-cta"
+          id="toolbarTrainButton"
+          data-training-link
+          target="_blank"
+          rel="noopener noreferrer"
+        >Watch Training</a>
         <button class="button button-secondary results-only" id="editScoreButton" type="button">Edit Scorecard</button>
         <button class="button button-secondary" id="resetButton" type="button">Reset</button>
         <button class="button button-primary results-only" id="printButton" type="button">Print / Save PDF</button>
@@ -173,22 +187,41 @@
           </section>
         </div>
 
-        <aside class="training-cta" aria-labelledby="trainingTitle">
+        <section class="next-steps" aria-labelledby="nextStepsTitle">
+          <p class="section-kicker">Close the gap</p>
+          <h3 id="nextStepsTitle">Your Recommended Next Steps</h3>
+          <div class="recommendation-grid" id="recommendationGrid"></div>
+        </section>
+
+        <aside class="plan-cta" aria-labelledby="planCtaTitle">
           <div>
-            <p class="section-kicker">Close the gap</p>
-            <h3 id="trainingTitle">Watch the 34-minute training</h3>
+            <p class="section-kicker">Work with ChiroCandy</p>
+            <h3 id="planCtaTitle">Get Your Customized Plan</h3>
             <p>
-              See exactly how top practices close the leak you just scored — and where the next $1M is hiding.
+              Your scores tell us where the leak is. A 20-minute call turns them
+              into a plan for your next $1M.
             </p>
           </div>
-          <a
-            class="button button-primary training-cta-button"
-            href="https://go.chirocandy.com/next-1-million-training"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Watch the Training <span aria-hidden="true">→</span>
-          </a>
+          <div class="plan-cta-actions">
+            <a
+              class="button button-primary"
+              id="schedulePlanButton"
+              data-booking-link
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Schedule My Plan Call <span aria-hidden="true">→</span>
+            </a>
+            <a
+              class="button button-secondary plan-cta-secondary"
+              id="watchTrainingButton"
+              data-training-link
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch the Full 34-Minute Masterclass
+            </a>
+          </div>
         </aside>
 
         <section class="math" aria-labelledby="opportunityTitle">
