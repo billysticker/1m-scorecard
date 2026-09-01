@@ -225,25 +225,19 @@ body[data-step="results"] .results-only {
   margin-bottom: 28px;
 }
 
-.welcome-title {
-  width: min(100%, 1040px);
-}
-
-.welcome-quiz-eyebrow {
-  margin: 0 0 10px;
+.welcome-quiz-mark {
+  margin: 0 0 22px;
   color: var(--bright);
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-align: right;
+  font: 900 clamp(44px, 8.5vw, 84px)/0.88 var(--heading);
+  letter-spacing: -0.055em;
   text-transform: uppercase;
 }
 
 .welcome-screen h1 {
-  max-width: none;
+  max-width: 1040px;
   margin: 0;
-  font: 900 clamp(42px, 6.2vw, 76px)/1 var(--heading);
-  letter-spacing: -0.055em;
+  font: 900 clamp(36px, 5.4vw, 62px)/1 var(--heading);
+  letter-spacing: -0.05em;
 }
 
 .welcome-screen h1 span {
@@ -1526,8 +1520,12 @@ h3 {
     padding-left: 20px;
   }
 
+  .welcome-quiz-mark {
+    font-size: clamp(40px, 12vw, 64px);
+  }
+
   .welcome-screen h1 {
-    font-size: clamp(38px, 11vw, 54px);
+    font-size: clamp(32px, 9vw, 48px);
   }
 
   .welcome-copy {
