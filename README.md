@@ -23,12 +23,17 @@ const CONFIG = {
   leadWebhookUrl: "https://your-n8n.example.com/webhook/scorecard-lead",
   bookingUrl: "https://chirocandy.com/schedule/",
   trainingUrl: "https://go.chirocandy.com/next-1-million-training",
+  gtmId: "GTM-WTMHXMN",
+  metaPixelId: "1677430622530607",
 };
 ```
 
 - `leadWebhookUrl` — n8n production webhook. Leave empty while developing locally; the form still gates results, but nothing is posted.
 - `bookingUrl` — scheduling link for **Book a Call**. The results screen appends `name`, `email`, and `utm_content` (`n8-t5-k3-f9-NUMBERS`) from the captured lead and scores.
 - `trainingUrl` — 34-minute masterclass, **Your Next $1M in Practice**.
+- `gtmId` / `metaPixelId` — loaded only after cookie **Accept**, same as chirocandy.com.
+
+Cookie consent uses the same `chirocandy-cookie-consent` key, bar copy, Reject/Accept actions, and Cookies reopen control as [chirocandy.com](https://chirocandy.com/). Terms and Privacy link to `https://chirocandy.com/terms-conditions/` and `https://chirocandy.com/privacy-policy/`.
 
 All recommendation headlines, body copy, service lists, and `ctaLabel` values live in the `RECOMMENDATIONS` object in `app.js`, keyed by category (`numbers`, `trust`, `known`, `found`) and score band (`low` 0–4, `mid` 5–7, `high` 8–10). Edit that object to change results-page copy without touching markup.
 

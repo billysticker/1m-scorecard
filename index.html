@@ -11,7 +11,17 @@
     <title>ChiroCandy $1M Growth Gap Scorecard</title>
     <link rel="icon" href="favicon.ico" sizes="any" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="app.js?v=preview" defer></script>
+    <script>
+      (function () {
+        try {
+          var choice = localStorage.getItem("chirocandy-cookie-consent");
+          if (choice === "accepted" || choice === "rejected") {
+            document.documentElement.dataset.cc = choice;
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script src="app.js?v=cookies" defer></script>
   </head>
   <body data-step="welcome">
     <nav class="toolbar" aria-label="Scorecard actions">
@@ -76,6 +86,12 @@
           <div><small>03</small><b>KNOWN</b><span>Do they remember?</span></div>
           <div><small>04</small><b>FOUND</b><span>Can they find you?</span></div>
         </div>
+
+        <nav class="welcome-legal" aria-label="Legal">
+          <a href="https://chirocandy.com/terms-conditions/" target="_blank" rel="noopener noreferrer">Terms</a>
+          <a href="https://chirocandy.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+          <a href="#cookie-settings" data-cookie-settings>Cookies</a>
+        </nav>
       </div>
     </section>
 
@@ -153,6 +169,12 @@
         <button class="text-button capture-back" id="backToScoreFromCaptureButton" type="button">
           ← Edit Scorecard
         </button>
+
+        <nav class="welcome-legal" aria-label="Legal">
+          <a href="https://chirocandy.com/terms-conditions/" target="_blank" rel="noopener noreferrer">Terms</a>
+          <a href="https://chirocandy.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+          <a href="#cookie-settings" data-cookie-settings>Cookies</a>
+        </nav>
       </div>
     </section>
 
@@ -363,5 +385,42 @@
         <span>PAGE 2 · DIAGNOSE THE GAP</span>
       </footer>
     </section>
+
+    <nav class="site-legal" aria-label="Legal">
+      <a href="https://chirocandy.com/terms-conditions/" target="_blank" rel="noopener noreferrer">Terms</a>
+      <a href="https://chirocandy.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+      <a href="#cookie-settings" data-cookie-settings>Cookies</a>
+    </nav>
+
+    <div
+      class="cc-bar"
+      id="cookieBar"
+      role="dialog"
+      aria-modal="false"
+      aria-labelledby="cookieTitle"
+      aria-describedby="cookieCopy"
+    >
+      <div class="cc-inner">
+        <div class="cc-copy">
+          <p class="cc-kicker" id="cookieTitle">
+            <span class="cc-dot" aria-hidden="true"></span>
+            Cookies
+          </p>
+          <p id="cookieCopy">
+            We use analytics and ads cookies to measure how the site is used and to improve our marketing. Necessary cookies stay on so the site works.
+            <a href="https://chirocandy.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy policy</a>
+          </p>
+        </div>
+        <div class="cc-actions">
+          <button class="cc-btn cc-btn-ghost" type="button" data-cookie-choice="rejected">Reject</button>
+          <button class="cc-btn cc-btn-green" type="button" data-cookie-choice="accepted">Accept</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="cc-reopen" id="cookieReopen" type="button" data-cookie-settings hidden>
+      <span class="cc-dot" aria-hidden="true"></span>
+      Cookies
+    </button>
   </body>
 </html>

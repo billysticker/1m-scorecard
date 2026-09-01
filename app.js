@@ -2,6 +2,8 @@ const CONFIG = {
   leadWebhookUrl: "https://billysticker.app.n8n.cloud/webhook/scorecard-lead",
   bookingUrl: "https://chirocandy.com/schedule/",
   trainingUrl: "https://go.chirocandy.com/next-1-million-training",
+  gtmId: "GTM-WTMHXMN",
+  metaPixelId: "1677430622530607",
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -626,3 +628,98 @@ function previewResults() {
   updateScore();
   showStep("results");
 }
+
+function initCookieConsent() {
+  const KEY = "chirocandy-cookie-consent";
+  let loaded = false;
+  const bar = document.querySelector("#cookieBar");
+  const reopen = document.querySelector("#cookieReopen");
+
+  window.__ccLoadMarketing = function loadMarketing() {
+    if (loaded) return;
+    loaded = true;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+    const gtm = document.createElement("script");
+    gtm.async = true;
+    gtm.src = `https://www.googletagmanager.com/gtm.js?id=${CONFIG.gtmId}`;
+    document.head.appendChild(gtm);
+
+    if (window.fbq) return;
+    const fbq = (window.fbq = function fbqProxy() {
+      fbq.callMethod ? fbq.callMethod.apply(fbq, arguments) : fbq.queue.push(arguments);
+    });
+    if (!window._fbq) window._fbq = fbq;
+    fbq.push = fbq;
+    fbq.loaded = true;
+    fbq.version = "2.0";
+    fbq.queue = [];
+    const pixel = document.createElement("script");
+    pixel.async = true;
+    pixel.src = "https://connect.facebook.net/en_US/fbevents.js";
+    document.head.appendChild(pixel);
+    window.fbq("init", CONFIG.metaPixelId);
+    window.fbq("track", "PageView");
+  };
+
+  function readChoice() {
+    try {
+      return localStorage.getItem(KEY);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function writeChoice(value) {
+    try {
+      localStorage.setItem(KEY, value);
+    } catch (error) {}
+  }
+
+  function showBar() {
+    if (!bar) return;
+    document.documentElement.removeAttribute("data-cc");
+    bar.hidden = false;
+    if (reopen) reopen.hidden = true;
+  }
+
+  function hideBar() {
+    if (!bar) return;
+    bar.hidden = true;
+    if (reopen) reopen.hidden = false;
+  }
+
+  function applyChoice(value, previous) {
+    writeChoice(value);
+    document.documentElement.dataset.cc = value;
+    if (value === "accepted") window.__ccLoadMarketing();
+    hideBar();
+    if (value === "rejected" && previous === "accepted" && loaded) {
+      window.location.reload();
+    }
+  }
+
+  const saved = readChoice();
+  if (saved === "accepted") {
+    window.__ccLoadMarketing();
+    hideBar();
+  } else if (saved === "rejected") {
+    hideBar();
+  } else {
+    showBar();
+  }
+
+  document.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-cookie-choice], [data-cookie-settings]");
+    if (!target) return;
+    if (target.hasAttribute("data-cookie-settings")) {
+      event.preventDefault();
+      showBar();
+      return;
+    }
+    applyChoice(target.getAttribute("data-cookie-choice"), readChoice());
+  });
+}
+
+initCookieConsent();
