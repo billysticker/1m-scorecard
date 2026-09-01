@@ -225,12 +225,22 @@ body[data-step="results"] .results-only {
   margin-bottom: 28px;
 }
 
-.welcome-screen .eyebrow {
-  margin: 0 0 18px;
+.welcome-title {
+  width: min(100%, 1040px);
+}
+
+.welcome-quiz-eyebrow {
+  margin: 0 0 10px;
+  color: var(--bright);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-align: right;
+  text-transform: uppercase;
 }
 
 .welcome-screen h1 {
-  max-width: 1040px;
+  max-width: none;
   margin: 0;
   font: 900 clamp(42px, 6.2vw, 76px)/1 var(--heading);
   letter-spacing: -0.055em;
